@@ -1,4 +1,4 @@
-package com.example.pagingcourse.viewmodel
+package com.example.pagingcourse.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

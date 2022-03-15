@@ -1,15 +1,19 @@
 package com.example.pagingcourse
 
+import android.annotation.SuppressLint
+import android.graphics.Color.red
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.pagingcourse.adapter.RickMortyPagedAdapter
+import com.example.pagingcourse.adapters.PagerAdapter
+import com.example.pagingcourse.adapters.RickMortyPagedAdapter
 import com.example.pagingcourse.databinding.ActivityMainBinding
-import com.example.pagingcourse.viewmodel.RickMortyViewModel
+import com.example.pagingcourse.ui.RickMortyViewModel
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -27,31 +31,55 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        setupRv()
-        loadingData()
+        initial()
 
     }
 
-    private fun loadingData() {
-        lifecycleScope.launch {
-            viewModel.listData.collect {pagingData ->
-                mAdapter.submitData(pagingData)
+    @SuppressLint("ResourceAsColor")
+    private fun initial() {
+        binding.viewPager.adapter = PagerAdapter(supportFragmentManager, lifecycle)
+        binding.tabLayout.tabIconTint = null
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.setIcon(R.drawable.ic_person)
+                    tab.text = "Characters "
+                    tab.icon?.setTint(ContextCompat.getColor(this, R.color.red))
+
+                }
+                1 -> {
+                    tab.setIcon(R.drawable.ic_location)
+                    tab.text = "Location"
+                    tab.icon?.setTint(ContextCompat.getColor(this, R.color.blue))
+                    tab.icon!!.alpha = 70
+                }
+                2 -> {
+                    tab.setIcon(R.drawable.ic_video)
+                    tab.text = "Episodes"
+                    tab.icon?.setTint(ContextCompat.getColor(this, R.color.teal_700))
+                    tab.icon!!.alpha = 70
+                }
             }
-        }
-    }
+        }.attach()
 
-    private fun setupRv() {
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab!!.icon!!.alpha = 250
+            }
 
-        mAdapter = RickMortyPagedAdapter()
-        binding.recyclerView.apply {
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                tab!!.icon!!.alpha = 70
+            }
 
-            layoutManager = StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL)
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                tab?.icon!!.alpha = 250
 
-        adapter= mAdapter
-            setHasFixedSize(true)
-        }
+            }
+
+        })
+
+
     }
 
 }

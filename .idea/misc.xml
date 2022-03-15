@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/PagingCourse/app/src/main/res/layout/activity_detail.xml" value="0.33" />
         <entry key="..\:/Users/user/AndroidStudioProjects/PagingCourse/app/src/main/res/layout/activity_main.xml" value="0.30277777777777776" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/PagingCourse/app/src/main/res/layout/all_characters_blank_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/user/AndroidStudioProjects/PagingCourse/app/src/main/res/layout/character_layout.xml" value="0.30277777777777776" />
       </map>
     </option>

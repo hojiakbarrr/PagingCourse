@@ -1,4 +1,4 @@
-package com.example.pagingcourse.adapter
+package com.example.pagingcourse.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.pagingcourse.adapter.RickMortyPagedAdapter.*
+import com.example.pagingcourse.adapters.RickMortyPagedAdapter.*
 import com.example.pagingcourse.databinding.CharacterLayoutBinding
-import com.example.pagingcourse.models.RickMorty
+import com.example.pagingcourse.models.allCharacters.RickMorty
 
-class RickMortyPagedAdapter : PagingDataAdapter<RickMorty, MyViewHolder>(diffCallback) {
+class RickMortyPagedAdapter (val mItemclickListener: ItemClickListener): PagingDataAdapter<RickMorty, MyViewHolder>(diffCallback) {
 
     inner class MyViewHolder(val binding: CharacterLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -39,6 +39,21 @@ class RickMortyPagedAdapter : PagingDataAdapter<RickMorty, MyViewHolder>(diffCal
                 crossfade(1000)
             }
         }
+        holder.itemView.setOnClickListener{
+            currentItem?.let { it1 -> mItemclickListener.onItemClick(it1.id) }
+        }
+
+//        Get a single character
+//
+//                + Get a single location
+//
+//                Filter characters  name: filter by the given name.
+//
+//        Get all locations + character
+//
+//        Get all episodes
+//
+//        Get a single episode
 
 
     }
@@ -50,4 +65,8 @@ class RickMortyPagedAdapter : PagingDataAdapter<RickMorty, MyViewHolder>(diffCal
             )
         )
     }
+}
+
+interface ItemClickListener {
+    fun onItemClick(id: Int)
 }

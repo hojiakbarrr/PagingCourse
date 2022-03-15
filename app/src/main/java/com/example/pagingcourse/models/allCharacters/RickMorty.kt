@@ -1,4 +1,4 @@
-package com.example.pagingcourse.models
+package com.example.pagingcourse.models.allCharacters
 
 data class RickMorty(
     val created: String,
